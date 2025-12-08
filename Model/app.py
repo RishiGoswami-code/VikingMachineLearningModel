@@ -4,23 +4,18 @@ import json
 import os
 import sys
 from typing import Literal
+
+# --- Dynamic Import Setup ---
+# Since app.py and all model files are now in the SAME directory, 
+# standard Python imports work directly. We only need current_dir for the data path.
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Import all five model classes (No sys.path manipulation needed now)
 from naive import NaiveBayesModel
 from logistics import LogisticRegressionModel
 from randomForest import RandomForestModel
 from SVM import SVMModel
 from k_means import KMeansModel
-
-
-# --- PATH CORRECTION AND DYNAMIC IMPORT SETUP ---
-
-# 1. Get the directory where the current script (fast_app.py / model.py) is located (e.g., .../Backend)
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# 2. Add the parent directory to the system path to allow importing local modules
-#    The parent directory contains the model files (naive.py, logistics.py, etc.)
-parent_dir = os.path.dirname(script_dir)
-sys.path.append(parent_dir)
-
 
 # --- Configuration ---
 app = FastAPI(
@@ -28,10 +23,12 @@ app = FastAPI(
     description="Predicts document authenticity using a 5-model ensemble (RF, SVM, LR, K-Means, NB)."
 )
 
-# Define the path to the 'data' folder, which is sibling to the 'Backend' folder
+# Define the path to the 'data' folder
 DATA_FILE_NAME = "data.json" 
-# Correct Path: [Parent Dir] / data / data.json
-DATA_FILE_PATH = os.path.join(parent_dir, "data", DATA_FILE_NAME) 
+
+# CORRECTED PATH: The data folder is a subfolder of the current directory.
+DATA_FILE_PATH = os.path.join(current_dir, "data", DATA_FILE_NAME) 
+# Example: /.../Model/data/data.json
 
 # Global variables to hold the trained models
 MODELS = {}
@@ -102,7 +99,7 @@ async def load_and_train_models():
         raise RuntimeError(f"Model Training Failed: {e}")
 
 
-# --- Ensemble Prediction Logic (Unchanged) ---
+# --- Ensemble Prediction Logic ---
 
 def ensemble_predict(test_case):
     """
@@ -130,7 +127,7 @@ def ensemble_predict(test_case):
         # Tie-breaker: defaults to the highest priority RF
         return rf_prediction
 
-# --- FastAPI Endpoint (Unchanged) ---
+# --- FastAPI Endpoint ---
 
 @app.post("/predict", response_model=PredictionOutput)
 def predict(input_data: PredictionInput):
