@@ -31,6 +31,7 @@ cd VikingMachineLearningModel
 ```bash
 python3 -m venv venv
 source venv/bin/activate   # On Windows: .\venv\Scripts\activate
+```
 
 ---
 
@@ -38,6 +39,7 @@ source venv/bin/activate   # On Windows: .\venv\Scripts\activate
 
 ```bash
 pip install fastapi uvicorn numpy scikit-learn tensorflow pydantic
+```
 
 ---
 
@@ -47,17 +49,18 @@ pip install fastapi uvicorn numpy scikit-learn tensorflow pydantic
   ### Start the Server
     ```bash
     uvicorn app:app --reload --host 0.0.0.0 --port 8000
-
+    ```
 When the system loads and trains all models, you will see:
 
 ```cpp
 All 6 Models Trained and Ready.
-
+```
 
 ### Our API will run at:
 
 ```bash
 http://127.0.0.1:8000
+```
 
 ---
 
@@ -68,6 +71,7 @@ http://127.0.0.1:8000
 
 ```bash
 http://127.0.0.1:8000/docs
+```
 
 ### This interactive UI lets you test predictions directly.
 
@@ -89,6 +93,7 @@ http://127.0.0.1:8000/docs
 {
   "image_path": "certificate_good_sig_good_seal_high_clarity.jpg"
 }
+```
 
 # **Output Example (JSON)**
 
@@ -97,6 +102,7 @@ http://127.0.0.1:8000/docs
   "prediction_status": true,
   "prediction_label": "GENUINE"
 }
+```
 
 ---
 
