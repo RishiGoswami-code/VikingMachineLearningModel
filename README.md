@@ -22,6 +22,7 @@ The API accepts an image path, runs a simulated Computer Vision (CV) pipeline to
 ```bash
 git clone [https://github.com/RishiGoswami-code/VikingMachineLearningModel.git]
 cd VikingMachineLearningModel
+```
 
 ---
 
