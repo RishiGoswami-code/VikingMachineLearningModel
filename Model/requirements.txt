@@ -1,0 +1,8 @@
+pymongo
+fastapi
+tensorflow
+opencv-python
+imutils
+scikit-image
+scikit-learn
+pydantic
