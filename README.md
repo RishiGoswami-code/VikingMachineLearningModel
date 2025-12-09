@@ -12,28 +12,7 @@ The API accepts an image path, runs a simulated Computer Vision (CV) pipeline to
 * **Deep Learning Feature Integration:** Uses simulated outputs from an image-based feature extractor (signature similarity, seal similarity, layout alignment).
 * **FastAPI Deployment:** Robust and fast API server built on FastAPI for easy prediction serving.
 * **Tie-Breaker Priority:** Uses a structured voting system with a clear priority (CNN > RF > SVM > LR > K-Means > NB) to resolve 3-3 ties.
-
-***
-
-## Repository Structure
-
-The project maintains a clean, modular structure:
-```mermaid
-graph TD
-    A[VikingMachineLearningModel]
-    A --> B[data/]
-    B --> B1[data.json]
-
-    A --> C[app.py]
-    A --> D[image_analyzer.py]
-    A --> E[CNN.py]
-    A --> F[naive.py]
-    A --> G[logistics.py]
-    A --> H[randomForest.py]
-    A --> I[SVM.py]
-    A --> J[k_means.py]
-    A --> K[README.md]
-
+* 
 ---
 
 ## **Setup & Installation**
@@ -41,7 +20,7 @@ graph TD
 ### 1. **Clone Repository**
 
 ```bash
-git clone [(https://github.com/RishiGoswami-code/VikingMachineLearningModel.git)]
+git clone [https://github.com/RishiGoswami-code/VikingMachineLearningModel.git]
 cd VikingMachineLearningModel
 
 ---
@@ -74,7 +53,7 @@ When the system loads and trains all models, you will see:
 All 6 Models Trained and Ready.
 
 
-Y### Our API will run at:
+### Our API will run at:
 
 ```bash
 http://127.0.0.1:8000
@@ -97,9 +76,9 @@ http://127.0.0.1:8000/docs
 
 ### Prediction Endpoint
 
-|Method |	Path	  | Description                            |
-|-------|-------- |----------------------------------------|
-|POST	  | /predict|	Runs the full ML pipeline + ensemble.  |
+|**Method** |	**Path**  | **Description**                        |
+|-----------|-------------|----------------------------------------|
+|POST	    | /predict    |	Runs the full ML pipeline + ensemble.  |
 
 ---
 
