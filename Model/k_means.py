@@ -95,7 +95,7 @@ class KMeansModel:
                 cluster_to_label[cluster_id] = "genuine"
             else:
                 cluster_to_label[cluster_id] = "fraud"
-
+        
         return cluster_to_label
 
 
