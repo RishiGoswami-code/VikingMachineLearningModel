@@ -6,3 +6,4 @@ imutils
 scikit-image
 scikit-learn
 pydantic
+gunicorn
