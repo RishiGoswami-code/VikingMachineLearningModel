@@ -168,4 +168,3 @@ class CNNModel:
             "fraud_probability": p_fraud,
             "prediction": prediction
         }
-    

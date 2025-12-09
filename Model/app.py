@@ -6,6 +6,7 @@ from typing import Literal
 # --- FastAPI and Pydantic Imports ---
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware # ✅ NEW IMPORT FOR CORS
 
 # --- PATH SETUP ---
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -16,13 +17,35 @@ from logistics import LogisticRegressionModel
 from randomForest import RandomForestModel
 from SVM import SVMModel
 from k_means import KMeansModel
-from CNN import CNNModel # NEW IMPORT
+from CNN import CNNModel 
 
 # --- Configuration ---
 app = FastAPI(
     title="Authenticity Ensemble Prediction API",
     description="Predicts document authenticity using a 6-model ensemble (CNN, RF, SVM, LR, K-Means, NB)."
 )
+
+# -----------------------------------------------------
+# ✅ CORS Middleware Configuration
+# This block handles the "OPTIONS 405 Method Not Allowed" error
+# by allowing cross-origin requests from the frontend.
+# -----------------------------------------------------
+
+# Define the origins (domains/ports) that are allowed to access the API.
+# Use ["*"] to allow all origins during development.
+origins = [
+    "*" 
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"], # Allows all methods (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"], # Allows all headers (like Content-Type)
+)
+
+# --- Configuration End ---
 
 # Define the path to the 'data' folder
 DATA_FILE_NAME = "data.json" 
@@ -84,7 +107,7 @@ async def load_and_train_models():
 
     try:
         # Train all six models
-        MODELS['cnn'] = CNNModel(training_data, weights) # NEW MODEL (Highest Priority)
+        MODELS['cnn'] = CNNModel(training_data, weights)
         MODELS['rf'] = RandomForestModel(training_data, weights)
         MODELS['svm'] = SVMModel(training_data, weights, kernel='linear', C=1.0)
         MODELS['lr'] = LogisticRegressionModel(training_data, weights, learning_rate=0.1, n_iterations=5000)
@@ -100,7 +123,7 @@ async def load_and_train_models():
         raise RuntimeError(f"Model Training Failed: {e}")
 
 
-# --- Ensemble Prediction Logic ---
+# --- Ensemble Prediction Logic (Unchanged) ---
 
 def ensemble_predict(test_case):
     """
@@ -109,7 +132,7 @@ def ensemble_predict(test_case):
     """
     
     # Get individual model predictions
-    cnn_prediction = MODELS['cnn'].result(test_case)['prediction'] # NEW PREDICTION
+    cnn_prediction = MODELS['cnn'].result(test_case)['prediction'] 
     rf_prediction = MODELS['rf'].result(test_case)['prediction']
     svm_prediction = MODELS['svm'].result(test_case)['prediction']
     lr_prediction = MODELS['lr'].result(test_case)['prediction']
